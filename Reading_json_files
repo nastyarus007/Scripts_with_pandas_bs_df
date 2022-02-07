@@ -1,0 +1,28 @@
+import requests 
+import pandas as pd
+import json
+
+def get_number_of_jobs_T(technology):
+    baseurl = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DA0321EN-SkillsNetwork/labs/module%201/Accessing%20Data%20Using%20APIs/jobs.json"
+    df = pd.read_json(baseurl)
+    found = df[df['Key Skills'].str.contains(technology)]
+    number_of_jobs = len(found)
+    print(number_of_jobs)
+    return technology, number_of_jobs
+
+get_number_of_jobs_T("Python")
+
+def get_number_of_jobs_L(location):
+    baseurl = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DA0321EN-SkillsNetwork/labs/module%201/Accessing%20Data%20Using%20APIs/jobs.json"
+    df = pd.read_json(baseurl)
+    found = df[df['Location'].str.contains(location)]
+    number_of_jobs_L = len(found)
+    print(number_of_jobs_L)
+    #your coe goes here
+    return location,number_of_jobs_L
+get_number_of_jobs_L("Los Angeles")
+
+baseurl = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DA0321EN-SkillsNetwork/labs/module%201/Accessing%20Data%20Using%20APIs/jobs.json"
+df = pd.read_json(baseurl)
+new_df = pd.DataFrame(data=df['Location']) #groupby('Location') #['Location'].count()
+print(new_df.value_counts())
