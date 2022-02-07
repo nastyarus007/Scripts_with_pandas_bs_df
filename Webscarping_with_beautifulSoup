@@ -1,0 +1,17 @@
+from bs4 import BeautifulSoup
+import requests
+import pandas as pd
+url = "https://cf-courses-data.s3.us.cloud-object-storage.appdomain.cloud/IBM-DA0321EN-SkillsNetwork/labs/datasets/Programming_Languages.html"
+data = requests.get(url).text
+soup = BeautifulSoup(data, 'html5lib')
+table = soup.find('table')
+dct = {}
+for row in table.find_all('tr'):
+    cols = row.find_all('td')
+    lang_name = cols[1].getText()
+    annual_av = cols[3].getText()
+    dct[lang_name] = annual_av
+    
+print(dct)
+df = pd.DataFrame.from_dict(dct, orient='index')
+print(df.head(20))
